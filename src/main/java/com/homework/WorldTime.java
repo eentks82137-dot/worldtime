@@ -6,12 +6,10 @@ import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@WebServlet("/worldtime") // web.xml 대신 어노테이션으로 URL 매핑
 public class WorldTime extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
