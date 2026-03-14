@@ -18,10 +18,10 @@
 
 ---
 
-- 변경 내용:
-- 예상 결과:
-- 관찰 결과:
-- 원인 분석:
+- 변경 내용: 서블릿 매핑 안에 있는 서블릿 이름을 worldTimeServlet1로 변경
+- 예상 결과: 404에러가 출력된다
+- 관찰 결과: HTTP 상태 404 – 찾을 수 없음 | Origin 서버가 대상 리소스를 위한 현재의 representation을 찾지 못했거나, 그것이 존재하는지를 밝히려 하지 않습니다.
+- 원인 분석: servlet에 설정한 이름을 매핑 해줘야 하는데 servlet-mapping에 일치하는 이름이 없어서 찾을 수 없다고 하는것같음
 
 ---
 
@@ -38,9 +38,9 @@
 
 ---
 
-- 변경 내용:
-- 예상 결과:
-- 관찰 결과:
+- 변경 내용: Content-Type 제거.
+- 예상 결과: 한글이 정상적으로 출력되지 않는다.
+- 관찰 결과: 한글이 정상적으로 출력되지 않는다.
 - 원인 분석:
 
 ---
@@ -58,10 +58,10 @@
 
 ---
 
-- 변경 내용:
-- 예상 결과:
-- 관찰 결과:
-- 원인 분석:
+- 변경 내용: get을 post로 변경
+- 예상 결과: post 요청을 처리할 수 없다고 표시
+- 관찰 결과: HTTP 상태 405 – 허용되지 않는 메소드. 요청 행에 포함된 해당 메소드는, origin 서버에 의해 인지되었으나, 대상 리소스에 의해 지원되지 않습니다.
+- 원인 분석: get으로 들어오는 요청을 처리하는 로직만 구현 해놔서 post로 들어온 요청을 거부함. 서버에서 요청을 인지했으나 해당 요청에 응답하지 않는다고 함. pom의 method는 요청 타입을 정하고, doGet()/doPost()는 각 타입으로 들어오는 요청을 처리한다. 브라우저에서 직접 URL을 입력하는 것은 GET 요청이다.
 
 ---
 
@@ -80,10 +80,24 @@
 
 ---
 
-- 변경 내용:
-- 예상 결과:
-- 관찰 결과:
-- 원인 분석:
+- 변경 내용: 유효하지 않은 타임존을 검사하는 구문 주석 처리
+- 예상 결과: 500에러 발생
+- 관찰 결과: HTTP 상태 500 – 내부 서버 오류. Unknown time-zone ID: Asia/Seoul1. 서버가, 해당 요청을 충족시키지 못하게 하는 예기치 않은 조건을 맞닥뜨렸습니다.
+
+```java
+java.time.zone.ZoneRulesException: Unknown time-zone ID: Asia/Seoul1
+    java.base/java.time.zone.ZoneRulesProvider.getProvider(ZoneRulesProvider.java:281)
+    java.base/java.time.zone.ZoneRulesProvider.getRules(ZoneRulesProvider.java:236)
+    java.base/java.time.ZoneRegion.ofId(ZoneRegion.java:121)
+    java.base/java.time.ZoneId.of(ZoneId.java:411)
+    java.base/java.time.ZoneId.of(ZoneId.java:359)
+    com.homework.WorldTime.doGet(WorldTime.java:25)
+    jakarta.servlet.http.HttpServlet.service(HttpServlet.java:564)
+    jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658)
+    org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51)
+```
+
+- 원인 분석: 존재하지 않는 타임존을 ZoneId.of()에 전달해서 ZoneRulesException이 발생했다. ZoneId.of()으로 타임존을 반환할 때 try catch로 감싸서 예외가 발생하면 기본값으로 설정하도록 수정해야 한다. 사용자 입력은 신뢰할 수 없기 때문에 항상 검증해야 한다.
 
 ---
 
@@ -102,9 +116,9 @@
 
 ---
 
-- 변경 내용:
-- 예상 결과:
-- 관찰 결과:
-- 원인 분석:
+- 변경 내용: requestCount 필드 추가, doGet()에서 requestCount 증가 및 출력
+- 예상 결과: requestCount가 계속 증가한다. 서로 다른 브라우저에서도 같은 카운트를 공유한다.
+- 관찰 결과: requestCount가 계속 증가하며, 서로 다른 브라우저에서도 같은 카운트를 공유한다.
+- 원인 분석: 서블릿 객체는 요청마다 새로 생성되지 않고, 하나의 객체가 재사용된다. 서블릿 생명 주기에서 서블릿이 처음 요청을 받을 때 인스턴스가 생성되고, 이후 모든 요청은 같은 인스턴스에서 처리된다. 따라서 requestCount는 모든 요청에서 공유되는 상태가 된다.
 
 ---

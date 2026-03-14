@@ -11,8 +11,13 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 public class WorldTime extends HttpServlet {
+    private int requestCount = 0;
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        requestCount++;
+        req.setAttribute("requestCount", requestCount);
+
         String locale = req.getParameter("locale");
         if (locale == null || locale.isEmpty()) {
             locale = "ko-KR"; // 기본값 설정
@@ -22,8 +27,11 @@ public class WorldTime extends HttpServlet {
             timezone = "Asia/Seoul"; // 기본값 설정
         }
 
-        ZoneId zoneId = ZoneId.of(timezone); // 타임존을 ZoneId 객체로 변환하여 유효성 검사
-        if (zoneId == null) {
+        ZoneId zoneId;
+
+        try {
+            zoneId = ZoneId.of(timezone); // 타임존을 ZoneId 객체로 변환하여 유효성 검사
+        } catch (Exception e) {
             zoneId = ZoneId.of("Asia/Seoul"); // 유효하지 않은 타임존인 경우 기본값으로 설정
         }
 

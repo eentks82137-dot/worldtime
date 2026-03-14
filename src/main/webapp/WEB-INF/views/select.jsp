@@ -6,6 +6,7 @@
         <p class="text-xs font-semibold uppercase tracking-[0.35em] text-amber-600">World Clock</p>
         <h2 class="mt-3 text-3xl font-black tracking-tight text-slate-900">도시와 언어를 선택하세요</h2>
         <p class="mt-2 text-sm leading-6 text-slate-600">원하는 지역의 현재 시간을 바로 확인할 수 있습니다.</p>
+        <p class="mt-2 text-sm leading-6 text-slate-600">요청 수: ${requestCount}</p>
     </div>
 
     <form action="worldtime" method="get" class="space-y-5">
@@ -27,7 +28,7 @@
                 <select name="timezone" id="timezone"
                     class="w-full bg-transparent py-3 text-sm font-medium text-slate-900 outline-none"
                     >
-                    <option value="Asia/Seoul">서울 (Asia/Seoul)</option>
+                    <option value="Asia/Seoul1">서울1 (Asia/Seoul)</option>
                     <option value="America/New_York">뉴욕 (America/New_York)</option>
                     <option value="Asia/Tokyo">도쿄 (Asia/Tokyo)</option>
                     <option value="Europe/London">런던 (Europe/London)</option>

@@ -3,7 +3,6 @@ package com.homework;
 import java.io.IOException;
 
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -16,6 +15,7 @@ public class HelloServlet extends HttpServlet {
         log.info("🐸🐸 /index ");
 
         // JSP로 포워딩
+        resp.setContentType("text/html;charset=UTF-8"); // 응답의 Content-Type 설정
         req.getRequestDispatcher("/WEB-INF/views/index.jsp").forward(req, resp);
     }
 }
