@@ -3,10 +3,9 @@
 
 <div class="rounded-[28px] border border-white/60 bg-white/75 p-7 shadow-[0_24px_80px_rgba(15,23,42,0.12)] backdrop-blur">
     <div class="mb-8">
-        <p class="text-xs font-semibold uppercase tracking-[0.35em] text-amber-600">World Clock</p>
+        <%-- <p class="text-xs font-semibold uppercase tracking-[0.35em] text-amber-600">Select</p> --%>
         <h2 class="mt-3 text-3xl font-black tracking-tight text-slate-900">도시와 언어를 선택하세요</h2>
         <p class="mt-2 text-sm leading-6 text-slate-600">원하는 지역의 현재 시간을 바로 확인할 수 있습니다.</p>
-        <p class="mt-2 text-sm leading-6 text-slate-600">요청 수: ${requestCount}</p>
     </div>
 
     <form action="worldtime" method="get" class="space-y-5">

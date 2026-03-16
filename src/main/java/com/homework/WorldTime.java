@@ -11,12 +11,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 public class WorldTime extends HttpServlet {
-    private int requestCount = 0;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        requestCount++;
-        req.setAttribute("requestCount", requestCount);
 
         String locale = req.getParameter("locale");
         if (locale == null || locale.isEmpty()) {
