@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
@@ -31,10 +32,12 @@ public class WorldTime extends HttpServlet {
         } catch (Exception e) {
             zoneId = ZoneId.of("Asia/Seoul"); // 유효하지 않은 타임존인 경우 기본값으로 설정
         }
+        Locale localeObj = Locale.forLanguageTag(locale); // 언어 태그를 Locale 객체로 변환
 
         ZonedDateTime currentTime = ZonedDateTime.now(zoneId); // 현재 시간을 해당 타임존으로 가져오기
         currentTime = currentTime.withNano(0); // 초 단위까지만 표시하기 위해 나노초 제거
-        String formattedTime = currentTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")); // 원하는 형식으로 포맷팅
+        String formattedTime = currentTime
+                .format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").withLocale(localeObj)); // 원하는 형식으로 포맷팅
 
         // JSP로 전달
         req.setAttribute("locale", locale);
