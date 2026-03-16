@@ -28,7 +28,7 @@
                 <select name="timezone" id="timezone"
                     class="w-full bg-transparent py-3 text-sm font-medium text-slate-900 outline-none"
                     >
-                    <option value="Asia/Seoul1">서울1 (Asia/Seoul)</option>
+                    <option value="Asia/Seoul">서울 (Asia/Seoul)</option>
                     <option value="America/New_York">뉴욕 (America/New_York)</option>
                     <option value="Asia/Tokyo">도쿄 (Asia/Tokyo)</option>
                     <option value="Europe/London">런던 (Europe/London)</option>
